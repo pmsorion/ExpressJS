@@ -2,7 +2,13 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const productsRouter = require('./routes/views/products');
-const productsApiRouter = require('./routes/api/products')
+const productsApiRouter = require('./routes/api/products');
+
+const { 
+    logErrors, 
+    clientErrorHandler,
+    errorHnadler
+} = require('./utils/middlewares/errorHandlers')
 
 //App
 const app = express();
@@ -26,6 +32,11 @@ app.use('/api/products', productsApiRouter);
 app.get('/', function(req, res) {
     res.redirect('/products');
 });
+
+//error handler
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHnadler);
 
 //Server initialisation
 const server = app.listen(8000, () => {

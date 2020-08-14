@@ -4,12 +4,13 @@ const ProductsService = require('../../services/products');
 
 const productService = new ProductsService();
 
-
 router.get('/', async function(req, res, next) {
     const { tags } = req.query;
+
     console.log('req', req.query);
 
-    try {        
+    try {    
+        throw new Error('This is an error form the API')  
         const products = await productService.getProducts({ tags });
     
         res.status(200).json({
